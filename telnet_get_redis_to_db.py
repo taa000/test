@@ -147,7 +147,7 @@ def main() :
     reType=[]
 
     r = redis.Redis()
-    nameDB = "anotherDB"
+    nameDB = "get"
     #FILTER DATA RECORDTYPE TO DB
     reType = filter_redis_rt(r, reType0, reType1, reType2, reType3, reType4, reType5, reType6, nameDB)
     

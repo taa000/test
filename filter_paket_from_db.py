@@ -17,7 +17,7 @@ def aksesDB(sql) :
         host = 'localhost',
         user = 'root',
         password = '',
-        database = 'updet_idx')
+        database = 'test ')
     act = mydb.cursor()
     act.execute(sql)
     result = act.fetchall()

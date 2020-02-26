@@ -106,7 +106,7 @@ def DB_createTable(nfield, nameDB) :
 
 
 def main():
-    nameofDB = 'anotherDB'
+    nameofDB = 'get'
     DB_createDB(nameofDB)
     DB_testConn(nameofDB)
     DB_createTable(7, nameofDB)
