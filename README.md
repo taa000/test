@@ -6,7 +6,7 @@
 2. python3 telnet_set_redis.py
     koneksi telnet + nyimpen data telnet ke key redis (inisialisasi key = i )
     (-) 1x running, ga ada set-time untuk expire
-    (-) harusnya pake perintah 'flushall' dalam redis untuk menghapus value key
+    DONE (-) harusnya pake perintah 'flushall' dalam redis untuk menghapus value key
 
 3. python telnet_get_redis_to_db.py
     read value dari key pada (tahap 2.) filter data sesuai dengan recordtype 0 - 6
