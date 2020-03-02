@@ -218,7 +218,7 @@ def main() :
     # daftar open prices
     openPrice, nullOpen = daftar_open_price(nEmiten)
 #     print(openPrice)  
-#     for i in range(len(nullOpen)):
+#     for i in range(len(nullOpen)):monitor
 #         print(nullOpen[i])
 
     # deal paket 1 : date, code, open, high, low, close, volume

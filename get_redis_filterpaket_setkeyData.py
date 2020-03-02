@@ -107,6 +107,52 @@ def get_openPrice(List_Em_Open, emiten) :
 
 # In[52]:
 
+def datafet(roll_data, List_Em_Open):
+    datafeed = pd.DataFrame(
+                columns= ['Tanggal', 'Waktu',
+                        'Sequence', 'Emiten', 
+                        'OpenPrice',
+                        'HighPrice', 'LowPrice', 
+                        'ClosePrice', 'Volume', 
+                        'Value', 'Frequency'])
+
+    for j in range (len(roll_data)) :
+        i = roll_data[j]
+        
+        #logic if untuk nyamain dengan list Emiten+Open Price
+        Open_Price = get_openPrice(List_Em_Open, i[3])
+        #High
+        if (i[4] == '00000000000.00') :
+            High_Price = Open_Price 
+        else :
+            High_Price = i[4]
+        #Low    
+        if (i[5] == '00000000000.00') :
+            Low_Price = Open_Price 
+        else :
+            Low_Price = i[5]
+        #Close    
+        if (i[6] == '00000000000.00') :
+            Close_Price = Open_Price 
+        else :
+            Close_Price = i[4]
+
+        data_dict = {'Tanggal' : i[0], 
+                    'Waktu' : i[1],
+                    'Sequence' : i[2],
+                    'Emiten' : i[3],
+                    'OpenPrice' : Open_Price,
+                    'HighPrice' : High_Price, 
+                    'LowPrice' : Low_Price, 
+                    'ClosePrice' : Close_Price, 
+                    'Volume' : i[7], 
+                    'Value' : i[8], 
+                    'Frequency' : i[9]}
+        datafeed = datafeed.append(data_dict, ignore_index=True)
+
+    # datafeed #Pengisian OpenPrice
+
+    return datafeed
 
 r = redis.Redis()
 reType1 = []
@@ -144,9 +190,6 @@ list_emiten_now = f_one(list_emiten_now)
 #List Emiten Open price, untuk RT 2
 now_data = fill_open(reType2, list_emiten_now)
 
-now_data
-
-
 # In[54]:
 
 
@@ -155,7 +198,6 @@ now_data
 for i in (now_data.Emiten) :
     indexNames = ListEm[ListEm.Emiten == i].index
     ListEm.drop(indexNames, inplace=True)
-ListEm
 
 
 # In[55]:
@@ -164,48 +206,48 @@ ListEm
 #List Emiten + Open yang ada
 
 List_Em_Open = data.append(now_data, ignore_index = True)
-List_Em_Open
+
 
 
 # In[56]:
 
 
-df = pd.DataFrame(
-    columns= ['Tanggal', 'Waktu',
-             'Sequence', 'Emiten', 
-             'OpenPrice',
-             'HighPrice', 'LowPrice', 
-             'ClosePrice', 'Volume', 
-             'Value', 'Frequency'])
+# df = pd.DataFrame(
+#     columns= ['Tanggal', 'Waktu',
+#              'Sequence', 'Emiten', 
+#              'OpenPrice',
+#              'HighPrice', 'LowPrice', 
+#              'ClosePrice', 'Volume', 
+#              'Value', 'Frequency'])
 
 
 # In[57]:
 
 
-for j in range (len(roll_data)) :
-    i = roll_data[j]
+# for j in range (len(roll_data)) :
+#     i = roll_data[j]
     
-    #logic if untuk nyamain dengan list Emiten+Open Price
-    Open_Price = get_openPrice(List_Em_Open, i[3])
+#     #logic if untuk nyamain dengan list Emiten+Open Price
+#     Open_Price = get_openPrice(List_Em_Open, i[3])
     
-    data_dict = {'Tanggal' : i[0], 
-                 'Waktu' : i[1],
-                 'Sequence' : i[2],
-                 'Emiten' : i[3],
-                 'OpenPrice' : Open_Price,
-                 'HighPrice' : i[4], 
-                 'LowPrice' : i[5], 
-                 'ClosePrice' : i[6], 
-                 'Volume' : i[7], 
-                 'Value' : i[8], 
-                 'Frequency' : i[9]}
-    df = df.append(data_dict, ignore_index=True)
+#     data_dict = {'Tanggal' : i[0], 
+#                  'Waktu' : i[1],
+#                  'Sequence' : i[2],
+#                  'Emiten' : i[3],
+#                  'OpenPrice' : Open_Price,
+#                  'HighPrice' : i[4], 
+#                  'LowPrice' : i[5], 
+#                  'ClosePrice' : i[6], 
+#                  'Volume' : i[7], 
+#                  'Value' : i[8], 
+#                  'Frequency' : i[9]}
+#     df = df.append(data_dict, ignore_index=True)
 
-df #Pengisian OpenPrice
+# df #Pengisian OpenPrice
 
 
 # In[58]:
-
+datafet(roll_data, List_Em_Open)
 
 # for i in df.HighPrice :
 #     print(i)
@@ -214,68 +256,25 @@ df #Pengisian OpenPrice
 # In[59]:
 
 
-datafeed = pd.DataFrame(
-    columns= ['Tanggal', 'Waktu',
-             'Sequence', 'Emiten', 
-             'OpenPrice',
-             'HighPrice', 'LowPrice', 
-             'ClosePrice', 'Volume', 
-             'Value', 'Frequency'])
-
-for j in range (len(roll_data)) :
-    i = roll_data[j]
-    
-    #logic if untuk nyamain dengan list Emiten+Open Price
-    Open_Price = get_openPrice(List_Em_Open, i[3])
-    #High
-    if (i[4] == '00000000000.00') :
-        High_Price = Open_Price 
-    else :
-        High_Price = i[4]
-    #Low    
-    if (i[5] == '00000000000.00') :
-        Low_Price = Open_Price 
-    else :
-        Low_Price = i[5]
-    #Close    
-    if (i[6] == '00000000000.00') :
-        Close_Price = Open_Price 
-    else :
-        Close_Price = i[4]
-
-    data_dict = {'Tanggal' : i[0], 
-                 'Waktu' : i[1],
-                 'Sequence' : i[2],
-                 'Emiten' : i[3],
-                 'OpenPrice' : Open_Price,
-                 'HighPrice' : High_Price, 
-                 'LowPrice' : Low_Price, 
-                 'ClosePrice' : Close_Price, 
-                 'Volume' : i[7], 
-                 'Value' : i[8], 
-                 'Frequency' : i[9]}
-    datafeed = datafeed.append(data_dict, ignore_index=True)
-
-datafeed #Pengisian OpenPrice
 
 
 # In[101]:
 
 
 # bring to key redis
-values= datafeed.values.tolist()
-for i in range (9999999) :
-    name_key = 'Data'+str(i)
-    r.mset({name_key:str(values[i])})
+# values= datafeed.values.tolist()
+# for i in range (9999999) :
+#     name_key = 'Data'+str(i)
+#     r.mset({name_key:str(values[i])})
 
 
 # In[ ]:
 
 
 # delete key diatas
-for i in range (9999999) :
-    name_key = 'Data'+str(i)
-    r.delete(name_key)
+# for i in range (9999999) :
+#     name_key = 'Data'+str(i)
+#     r.delete(name_key)
 
 
 # In[67]:
@@ -291,22 +290,5 @@ for i in range (9999999) :
 #     row = data[i]
 #     time.sleep(0.5)
 #     r.publish('Paket_Satu',str(row[0:9]))
-
-
-# In[61]:
-
-
-len(datafeed.values.tolist())
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
 
 

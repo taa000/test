@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[2]:
 
 
 import redis
@@ -13,11 +12,14 @@ import redis
 r = redis.Redis()
 p = r.pubsub()
 p.subscribe('Paket_Satu')
-for i in range (9999999):
+start = True
+while (start) :
     message = p.get_message() 
     if message: 
         command = message['data']
         print(command)
+    else :
+        start == False
 
 
 # In[ ]:

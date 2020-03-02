@@ -14,7 +14,7 @@ import redis
 
 def telnet_conn(HOST,PORT) :
     tn = telnetlib.Telnet(HOST,PORT) 
-    tn.write(b'tcsre121|jakarta123|1 r\n') 
+    tn.write(b'tcsre122|jakarta123|2 r\n') 
     tn.set_debuglevel(1) 
     return tn
 
@@ -30,7 +30,7 @@ def read_data_to_redis(tn, r):
         output = output.split('\\n')
         for x in range (len(output)):
             time.sleep(0.1)
-            print(output[x])
+            # print(output[x])
             if ((output[x] != b'') or (output[x] != "\"") or (output[x] != '') or (output[x] != None) ): 
                 r.mset({i:output[x]})
                 i+=1
