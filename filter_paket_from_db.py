@@ -7,6 +7,7 @@
 import mysql.connector
 import re
 import array
+import csv
 
 
 # In[2]:
@@ -17,7 +18,7 @@ def aksesDB(sql) :
         host = 'localhost',
         user = 'root',
         password = '',
-        database = 'test ')
+        database = '5March20')
     act = mydb.cursor()
     act.execute(sql)
     result = act.fetchall()
@@ -223,8 +224,15 @@ def main() :
 
     # deal paket 1 : date, code, open, high, low, close, volume
     paket_data1 = paket_satu(openPrice)
-    for i in range (len(paket_data1)) :
-        print(paket_data1[i])
+    
+    with open('data_belum_divalidasi/Mar05-2020.txt','a') as files :
+        for i in range (len(paket_data1)) :
+            print(paket_data1[i])
+         #save to file txt
+            write = csv.writer(files)
+            write.writerow(paket_data1[i])
+        
+    
     
 main()
 

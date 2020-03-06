@@ -95,68 +95,81 @@ def filter_rt6(data, nameDB):
     mydb.commit() 
 
 
+def alldata(data, nameDB):
+    curr, mydb = connection_db(nameDB)
+    sql = """INSERT INTO recordtype VALUES (%s,%s,%s,%s)"""
+    curr.execute(sql,data)
+    mydb.commit()
+
 # In[405]:
 
 
-def filter_redis_rt(r, reType0, reType1, reType2, reType3, reType4, reType5, reType6, nameDB):
-    reType=[]
-    for i in range (9999) :
-        go = r.get(i+2)
-        if (go == None):
-            break
-        elif (go !=b'"') and (go != b"'") :
-            data=go.decode('utf-8','ignore')
-            data = re.sub('\s','', str(data))
-            rowData = re.split('\|',str(data))
-            if (rowData[4]=='0') :
-                filter_rt0(rowData[1:7], nameDB)
-                reType0.append(rowData[0:7])
-            elif (rowData[4]=='1') :
-                filter_rt1(rowData[1:20], nameDB)
-                reType1.append(rowData[0:20])
-            elif (rowData[4]=='2') :
-                filter_rt2(rowData[1:22], nameDB)
-                reType2.append(rowData[0:22])
-            elif (rowData[4]=='3') :
-                filter_rt3(rowData[1:18], nameDB)
-                reType3.append(rowData[0:18])
-            elif (rowData[4]=='4') :
-                filter_rt4(rowData[1:8], nameDB)
-                reType4.append(rowData[0:8])
-            elif (rowData[4]=='5') :
-                filter_rt5(rowData[1:24], nameDB)
-                reType5.append(rowData[0:24])
-            elif (rowData[4]=='6') :
-                filter_rt6(rowData[1:13], nameDB)
-                reType6.append(rowData[0:13])
-    reType = reType0, reType1, reType2, reType3, reType4, reType5, reType6
-    return reType
+def filter_redis_rt(r, nameDB, reType):
+    start = True
+    i = 0
+    while (start) :
+        if (r.get(i) == b'OK 172.16.3.158\\r\\n') or (r.get(i) == b"b'Welcome to Datafeed Server 172.16.3.158\\nOK 172.16.3.158\\r\\n") :
+            while(start) :
+                go = r.get(i+1)
+                if (go == None):
+                    break
+                elif (go != b"'") and (go != b"b''") and (go != b"\\n'") and (go != b""):
+                    data=go.decode('utf-8','ignore')
+                    data = re.sub('\s','', str(data))
+                    rowData = re.split('\|',str(data))
+                    print(rowData)
+                    index = rowData[3:4]
+                    if (index ==['0']) :
+                        filter_rt0(rowData[0:6], nameDB)
+                        data = rowData
+                    elif (index ==['1']) :
+                        filter_rt1(rowData[0:19], nameDB)
+                        data = rowData
+                    elif (index ==['2']) :
+                        filter_rt2(rowData[0:21], nameDB)
+                        data = rowData
+                    elif (index ==['3']) :
+                        filter_rt3(rowData[0:17], nameDB)
+                        data = rowData
+                    elif (index ==['4']) :
+                        filter_rt4(rowData[0:7], nameDB)
+                        data = rowData
+                    elif (index ==['5']) :
+                        filter_rt5(rowData[0:23], nameDB)
+                        data = rowData
+                    elif (index ==['6']) :
+                        filter_rt6(rowData[0:12], nameDB)
+                        data = rowData
+                    reType.append(data)
+                    alldata(rowData[0:4],nameDB)
+                    inc = rowData[2]
+                print(data)
+                i+=1
+            start = False
+        i+=1
+        if (i == 100) :
+            start = False
+    return reType, inc
 
 
 # In[406]:
 
 
 def main() :
-    reType0=[]
-    reType1=[]
-    reType2=[]
-    reType3=[]
-    reType4=[]
-    reType5=[]
-    reType6=[]
     reType=[]
 
     r = redis.Redis()
-    nameDB = "get"
+    nameDB = "5March20"
     #FILTER DATA RECORDTYPE TO DB
-    reType = filter_redis_rt(r, reType0, reType1, reType2, reType3, reType4, reType5, reType6, nameDB)
-    
+    print("START")
+    reType, inc = filter_redis_rt(r, nameDB, reType)
+    print("TESSSSS " + inc)
+    # print("FINISH")
     #FILTER DATA PAKET 1
-    
 
-
-# In[407]:
-
+# inc = 0
+# looping = True
+# while (looping) :
+#     inc = main()
 
 main()
-

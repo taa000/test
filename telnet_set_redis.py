@@ -27,10 +27,9 @@ def read_data_to_redis(tn, r):
     while True: 
         tn_read = tn.read_very_eager()
         output = repr(tn_read)
-        output = output.split('\\n')
+        output = output.split('IDX|')
         for x in range (len(output)):
             time.sleep(0.1)
-            # print(output[x])
             if ((output[x] != b'') or (output[x] != "\"") or (output[x] != '') or (output[x] != None) ): 
                 r.mset({i:output[x]})
                 i+=1
@@ -51,10 +50,6 @@ def main() :
 
 
 main()
-
-
-# In[ ]:
-
 
 
 

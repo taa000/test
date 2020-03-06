@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 import time
 import array 
+import csv
 
 def filter_redis_paket(r):
     rt1=[]
@@ -23,22 +24,22 @@ def filter_redis_paket(r):
         data = re.sub('\s','', str(data))
         data = re.sub("\b'","", str(data))
         rowdata = re.split('\|',str(data))
-        recordtype = rowdata[4:5]
-        # if (recordtype==['1']) :
-            # data = [rowdata[1], rowdata[2], rowdata[3], rowdata[7], rowdata[10]]
-            # if (rowdata[2]>= '085500') and (rowdata[2] <='085559') :
-            #     d = [rowdata[3], rowdata[7], rowdata[10]]
-            #     rt1.append(d)
-        if(recordtype==['2']) :
-            if (rowdata[2]>'085959') and (rowdata[6]=='0') :
-                e = [rowdata[3],rowdata[7], rowdata[10]]
+        recordtype = rowdata[3:4]
+        if (recordtype==['1']) :
+            data = [rowdata[0], rowdata[1], rowdata[2], rowdata[6], rowdata[9]]
+            if (rowdata[1]>= '085500') and (rowdata[1] <='085559') :
+                d = [rowdata[2], rowdata[6], rowdata[9]]
+                rt1.append(d)
+        elif(recordtype==['2']) :
+            if (rowdata[1] >= '0900000') and (rowdata[5]=='0') :
+                e = [rowdata[2],rowdata[6], rowdata[9]]
                 rt2.append(e)
         elif (recordtype==['5']) :
-            g = [rowdata[1], rowdata[2], rowdata[3], rowdata[5],rowdata[8], rowdata[9], rowdata[10], rowdata[12], rowdata[13], rowdata[14]]
-            dataa.append(g)
-            if ((int(rowdata[2]) <= 85959) and (rowdata[6]=='RG')) :
+            if (rowdata[1] <= '085959') and (rowdata[5]=='RG') :
                 f =rowdata[5]
                 rt5.append(f)
+            g = (rowdata[0], rowdata[1], rowdata[2], rowdata[4],rowdata[7], rowdata[8], rowdata[9], rowdata[11], rowdata[12], rowdata[13])
+            dataa.append(g)
     return rt1, rt2, rt5, dataa
 
 def get_list_emiten(rt5) :
@@ -123,27 +124,10 @@ def datafet(roll_data, List_Em_Open, r):
                     'Value' : i[8], 
                     'Frequency' : i[9]}   
         datafeed = datafeed.append(data_dict, ignore_index=True)
-    
-    # for i in datafeed :
-    #     r.publish('Paket_Satu', str(i))
-    # # datafeed #Pengisian OpenPrice
+        print(data_dict)
 
     return datafeed
 
-
-def publish_redis(datafeed,r) :
-    data = datafeed.values.tolist()
-    for i in range (999999999) :
-        row = data[i]
-        if (row != None ) :
-            time.sleep(0.5)
-            r.publish('Paket_Satu',str(row[0:9]))
-            print(str(row[0:9]))
-
-
-# def pub(r, data) :
-#     data = row[0:9]
-#     return r.publish('Paket_Satu',str(row[0:9]))
 
 def main() :
     r = redis.Redis()
@@ -155,7 +139,7 @@ def main() :
 
     list_emiten, ListEm = get_list_emiten(reType5) #588
 
-    data = fill_open(reType1, list_emiten)
+    data = fill_open(reType1, list_emiten) #default
 
     for i in (data.Emiten) :
         indexNames = ListEm[ListEm.Emiten == i].index
@@ -175,10 +159,21 @@ def main() :
 
     datafeed = datafet(roll_data, List_Em_Open, r)
 
-    # data = datafeed.values.tolist()
-    # for i in data:
-    #     print(i)
+    datafeed = datafeed.values.tolist()
+
+
+    with open('data_belum_divalidasi/Mar05-2020-from-otwredis.txt','a') as files :
+        for i in range (len(datafeed)) :
+            print(datafeed[i])
+         #save to file txt
+            write = csv.writer(files)
+            write.writerow(datafeed[i])
+        
+
+   
+        
+
   
-    publish_redis(datafeed, r)
+
 
 main()
