@@ -14,3 +14,6 @@
     (-) belum ada filtering untuk paketdata 
 
 (-) main.py -> belum bs di pake
+
+Belum update lagi
+========================================================================================
