@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-database.py
-=======
 #PROGRES 
 <p>
 __DONE__
