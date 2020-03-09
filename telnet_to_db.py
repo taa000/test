@@ -149,13 +149,6 @@ def read_data_to_redis(tn, r, nameDB):
 
 
 
-         
-                
-
-
-# In[14]:
-
-
 def main() :
     r = redis.Redis()
     nameDB = "4March20"

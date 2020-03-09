@@ -20,3 +20,8 @@ while(start):
     # date, time, seq, emiten, open, high, low, close, volume, value, frequency, net value foreign, net value local, total net value
     r.publish('Paket_Enam',str(row[0:14]))
     i+=1
+
+
+# on-the-way
+# butuh redis dengan port baru :
+# redis yang nyimpan data mentah : 127.0.0.1:6372

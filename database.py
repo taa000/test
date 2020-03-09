@@ -9,7 +9,7 @@ import mysql.connector
 
 
 # In[50]:
-
+# Membuat database sesuai dengan <nameDB>
 
 def DB_createDB(nameDB):
     mydb = mysql.connector.connect(
@@ -23,7 +23,7 @@ def DB_createDB(nameDB):
 
 
 # In[51]:
-
+# Tes koneksi database sesuai dengan <nameDB>
 
 def DB_testConn(nameDB):
     mydb = mysql.connector.connect(
@@ -37,7 +37,8 @@ def DB_testConn(nameDB):
 
 
 # In[59]:
-
+#KOneksi untuk meng-insert tabel baru kedalam database
+# untuk <DB_insert> nanti akan di call di <DB_createTable>
 
 def DB_Insert(nameDB):
     mydb = mysql.connector.connect(
@@ -54,9 +55,17 @@ def DB_Insert(nameDB):
 
 
 
+# Definisi create Tabel
+# Tabel yang di buat ada 8 Tabel :
+#     1. Tabel yang isinya semua data Record Type
+#           Date, Time, Sequence, RecordType
+#     2. Tabel RecordType 0-6
+#           Sesuai dengan kategori RecordTypenya
+
 
 def DB_createTable(nfield, nameDB) :
     curr, mydb = DB_Insert(nameDB)
+
     #Tabel untuk cek semua data
     sql_com = "CREATE TABLE recordtype (dates BIGINT NOT NULL, timee BIGINT NOT NULL, sequence BIGINT NOT NULL, record_type BIGINT NOT NULL)"
     curr.execute(sql_com)
@@ -89,19 +98,14 @@ def DB_createTable(nfield, nameDB) :
 
 
 def main():
+
+    # NameofDB = nameDB ==> Jadi harus di ganti namanya semisalnya nama DB sebelumnya sudah ada
     nameofDB = '5March20'
     DB_createDB(nameofDB)
     DB_testConn(nameofDB)
     DB_createTable(7, nameofDB)
 
-
-# In[62]:
-
-
 main()
-
-
-# In[ ]:
 
 
 
