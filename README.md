@@ -1,5 +1,6 @@
+#PROGRES 
 __DONE__
-database.py = membuat DB, cek koneksi DB, Membuat Tabel RT
+>database.py = membuat DB, cek koneksi DB, Membuat Tabel RT
   <nameofDB> : nama DB yang akan di eksekusi
     
 <DONE>
@@ -35,16 +36,7 @@ get_redis_to_db.py = get redis hasil filter kemudian insert ke DB, filter berdas
 telnet_to_db.py ==> ga bisa baca decode hasil telnet.
   
 
-	
-   
-  
-
-  
-
-
-
-
-Chaneel >> Output Paket : 
+#Chaneel >> Output Paket : 
     Paket_Satu  : date, time, seq, emiten, open, high, low, close, volume
     Paket_Dua   : date, time, seq, emiten, open, high, low, close, volume, value
     Paket_Tiga  : date, time, seq, emiten, open, high, low, close, volume, value, frequency
@@ -52,7 +44,7 @@ Chaneel >> Output Paket :
     Paket_Lima  : date, time, seq, emiten, open, high, low, close, volume, value, frequency, net value foreign, net value local,
     Paket_Enam  : date, time, seq, emiten, open, high, low, close, volume, value, frequency, net value foreign, net value local, total net value
 
-Spec code :
+#Spec code :
 Python3
 Lib : 
   - time
@@ -63,7 +55,7 @@ Lib :
   - csv
   - array
  
- Redis :
+ #Redis :
     redis-server -> cmd : untuk menyalakan redis
     redis-cli -> cmd : untuk cek status di redis
         command : 
@@ -72,7 +64,6 @@ Lib :
             get <key> : cek data yang ada di key <key>
             flushall : menghapus semua key
 
-
-Running :
+#Running :
 	database.py >> telnet_set_redis.py >> get_redis_to_db.py >> filter_paket_from_db >> .... pubsub
 	telnet_set_redis.py >> get_redis_filterpaket.py >> .... pubsub
