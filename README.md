@@ -67,4 +67,3 @@ Lib :
 #Running :
 	database.py >> telnet_set_redis.py >> get_redis_to_db.py >> filter_paket_from_db >> .... pubsub
 	telnet_set_redis.py >> get_redis_filterpaket.py >> .... pubsub
->>>>>>> 144c49865382db712357b7bb71745f92261c62fa
