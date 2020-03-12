@@ -21,7 +21,7 @@ redis_write_publish.py = publish redis sesuai dengan paketnya.
 <p>   
 __[OTW]__
 redis_read_subscribe.py = membaca/ subs redis berdasarkan channel (atau paket)
-    channel = paket >> Output Paket
+    channel = paket >> Output Paket 
 <p>   
 __[OTW]__
 filter_paket_from_db.py = filter paket 1-6 dari DB

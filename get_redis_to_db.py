@@ -118,7 +118,7 @@ def filter_redis_rt(r, nameDB, reType):
                     reType.append(data)
                     alldata(rowData[0:4],nameDB) #MASUK KE DB DENGAN TABEL RECORDTYPE
                     inc = rowData[2]
-                print(data)
+                # print(data)
                 i+=1
             start = False
         j+=1
@@ -134,7 +134,7 @@ def main() :
     reType=[]
 
     r = redis.Redis()
-    nameDB = "4March20"
+    nameDB = "10march20"
     #FILTER DATA RECORDTYPE TO DB
     print("START")
     reType = filter_redis_rt(r, nameDB, reType)

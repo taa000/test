@@ -149,6 +149,7 @@ def main() :
 
     now_data = fill_open(reType2, list_emiten_now)
 
+    # data open yang done di kurangin dengan list emiten. buat nyari emiten yang gada open pricemua
     for i in (now_data.Emiten) :
         indexNames = ListEm[ListEm.Emiten == i].index
         ListEm.drop(indexNames, inplace=True)
@@ -160,10 +161,10 @@ def main() :
     datafeed = datafeed.values.tolist()
 
 
-    with open('data_belum_divalidasi/Mar06-2020-from-otwredis.txt','a') as files :
+    with open('data_belum_divalidasi/Mar10-2020-from-otwredis.txt','a') as files :
         for i in range (len(datafeed)) :
             print(datafeed[i])
-         #save to file txt
+            # save to file txt 
             write = csv.writer(files)
             write.writerow(datafeed[i]) 
 main()

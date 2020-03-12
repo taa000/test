@@ -100,7 +100,7 @@ def DB_createTable(nfield, nameDB) :
 def main():
 
     # NameofDB = nameDB ==> Jadi harus di ganti namanya semisalnya nama DB sebelumnya sudah ada
-    nameofDB = '5March20'
+    nameofDB = '10March20'
     DB_createDB(nameofDB)
     DB_testConn(nameofDB)
     DB_createTable(7, nameofDB)

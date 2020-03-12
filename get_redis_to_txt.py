@@ -5,7 +5,7 @@ import csv
 
 r = redis.Redis()
 # file : nama file txt yang akan di simpan
-file = 'data_belum_divalidasi/Marc09-12Siang.txt'
+file = 'data_belum_divalidasi/Marc10.txt'
 
 # tipe 'a' = append artinya row yang akan di baca kemudian di tambahkan.
 with open(file,'a') as files :
@@ -18,7 +18,7 @@ with open(file,'a') as files :
             i = j+1
             print("Start get data ...")
             while(start) :  
-                # time.sleep(0.3)
+                time.sleep(0.3)
                 getRow = r.get(i)
                 #filter keys data sampah
                 if (getRow != b"'") and (getRow != b"b''") and (getRow != b"\\n'") and (getRow != b"") and (getRow != "b""") and (getRow != b"b'") and (getRow != None): #bisa ditambahkan lagi filternya
