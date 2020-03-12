@@ -1,6 +1,10 @@
 #PROGRES 
 <p>
+<<<<<<< HEAD
 __[DONE]__
+=======
+[__DONE__]
+>>>>>>> 6872e9344968c214961b8e21b19a5b190e7af5eb
 database.py = membuat DB, cek koneksi DB, Membuat Tabel RT
 >nameofDB>: nama DB yang akan di eksekusi
 <p>   
