@@ -134,7 +134,7 @@ def main() :
     reType=[]
 
     r = redis.Redis()
-    nameDB = "10march20"
+    nameDB = "Test12Maret"
     #FILTER DATA RECORDTYPE TO DB
     print("START")
     reType = filter_redis_rt(r, nameDB, reType)

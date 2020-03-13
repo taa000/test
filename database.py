@@ -51,9 +51,6 @@ def DB_Insert(nameDB):
     return curr, mydb  
 
 
-# In[60]:
-
-
 
 # Definisi create Tabel
 # Tabel yang di buat ada 8 Tabel :
@@ -100,7 +97,7 @@ def DB_createTable(nfield, nameDB) :
 def main():
 
     # NameofDB = nameDB ==> Jadi harus di ganti namanya semisalnya nama DB sebelumnya sudah ada
-    nameofDB = '10March20'
+    nameofDB = 'Test12Maret'
     DB_createDB(nameofDB)
     DB_testConn(nameofDB)
     DB_createTable(7, nameofDB)
