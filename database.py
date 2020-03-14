@@ -69,6 +69,12 @@ def DB_createTable(nfield, nameDB) :
     mydb.commit()
     print ('Membuat tabel recordType : Sukses !!')
 
+    #Tabel Untuk Paket Data
+    sql_paketdata = "CREATE TABLE paketdata (dates BIGINT NOT NULL, timee BIGINT NOT NULL, sequence BIGINT NOT NULL, emiten_code VARCHAR(100), open_price BIGINT NOT NULL, high_price BIGINT NOT NULL, low_price BIGINT NOT NULL, close_price BIGINT NOT NULL, volume BIGINT NOT NULL, value BIGINT NOT NULL, frequency BIGINT NOT NULL)"
+    curr.execute(sql_paketdata)
+    mydb.commit()
+    print ('Membuat tabel paketdata : Sukses !!')
+
     #Tabel untuk record Type
     for field in range (nfield) :
         if (field==0) :
@@ -97,7 +103,7 @@ def DB_createTable(nfield, nameDB) :
 def main():
 
     # NameofDB = nameDB ==> Jadi harus di ganti namanya semisalnya nama DB sebelumnya sudah ada
-    nameofDB = 'Test12Maret'
+    nameofDB = 'Test14Maret'
     DB_createDB(nameofDB)
     DB_testConn(nameofDB)
     DB_createTable(7, nameofDB)

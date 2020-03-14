@@ -20,9 +20,11 @@ def connection_db(nameDB):
     curr = mydb.cursor()
     return curr, mydb
 
+
+
 def fill(data, nameDB):
     curr, mydb = connection_db(nameDB)
-    sql = "INSERT INTO paketdata (dates, timee, sequence, sec_code, high_price, low_price, close_price, volume, value, frequency)  VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)" #OK
+    sql = "INSERT INTO paketdata (dates, timee, sequence, emiten_code, open_price, high_price, low_price, close_price, volume, value, frequency)  VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)" #OK
     curr.execute(sql,data)
     mydb.commit() 
 
@@ -36,16 +38,16 @@ def reg(data) :
 
 r = redis.Redis()
 p = r.pubsub()
-# p.subscribe('Paket_Satu') #Tinggal di ganti mau paket berapanya
 
 
-nameDB = '10March20'
-p.subscribe('testing')
+nameDB = 'Test14Maret'
+p.subscribe('testing') #sesuain nama channel di tes.py
 
-
+print("OK")
 
 start = True
 while (start) :
+    
     message = p.get_message() 
     if message: 
         command = message['data']
@@ -53,8 +55,14 @@ while (start) :
             data = command.decode('utf-8', 'ignore')
             data = reg(data)
             rowData = re.split('\,',str(data))
-            time.sleep(3)
-            fill(rowData[0:], nameDB)
-            # print(rowData[0:])
+            # time.sleep(3) #gausah pake delay
+            fill(rowData[0:12], nameDB)
+            print(rowData[0:12])
+            # print(rowData[1])
+
+
+# contoh data :
+    # ['20200310', '090003', '00005276', 'BHIT', '00000000087.00', '00000000000.00', '00000000000.00', '00000000000.00', '000000000000', '0000000000000000', '0000000']
+    # 
 
 
